@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui";
+import { API_BASE_URL } from "./../config";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ export default function Home() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/login", {
+      const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

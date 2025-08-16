@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui";
+import { API_BASE_URL } from "./../../config";
 
 export default function PDFs() {
   const [pdfs, setPdfs] = useState<any[]>([]);
@@ -23,7 +24,7 @@ export default function PDFs() {
 
   const fetchPdfs = async (userId: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/user-pdfs/${userId}`);
+      const response = await fetch(`${API_BASE_URL}/user-pdfs/${userId}`);
       const data = await response.json();
 
       if (data.success) {

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui";
+import { API_BASE_URL } from "./../../config";
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
@@ -43,7 +44,7 @@ export default function Upload() {
       formData.append("num_questions", numQuestions.toString());
       formData.append("languages", language);
 
-      const response = await fetch("http://localhost:8000/generate-quiz-json", {
+      const response = await fetch(`${API_BASE_URL}/generate-quiz-json`, {
         method: "POST",
         body: formData
       });

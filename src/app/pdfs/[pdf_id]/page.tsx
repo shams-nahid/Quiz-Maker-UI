@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Button } from "@/components/ui";
+import { API_BASE_URL } from "./../../../config";
 
 export default function QuizHistory() {
   const [data, setData] = useState<any>(null);
@@ -27,9 +28,7 @@ export default function QuizHistory() {
 
   const fetchQuizHistory = async (pdfId: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/pdf-quiz-history/${pdfId}`
-      );
+      const response = await fetch(`${API_BASE_URL}/pdf-quiz-history/${pdfId}`);
       const result = await response.json();
 
       if (result.success) {

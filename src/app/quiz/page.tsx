@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui";
+import { API_BASE_URL } from "./../../config";
 
 export default function Quiz() {
   const [quiz, setQuiz] = useState<any>(null);
@@ -53,20 +54,17 @@ export default function Quiz() {
         })
       );
 
-      const response = await fetch(
-        "http://localhost:8000/analyze-quiz-performance",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            quiz_id: quiz.quiz_id,
-            user_id: localStorage.getItem("user_id"),
-            user_answers: answers
-          })
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/analyze-quiz-performance`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          quiz_id: quiz.quiz_id,
+          user_id: localStorage.getItem("user_id"),
+          user_answers: answers
+        })
+      });
 
       const data = await response.json();
 
