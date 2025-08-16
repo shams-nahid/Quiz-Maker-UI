@@ -5,7 +5,7 @@ import { Button } from "@/components/ui";
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
-  const [numQuestions, setNumQuestions] = useState(5);
+  const [numQuestions, setNumQuestions] = useState(1);
   const [language, setLanguage] = useState("english");
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -24,6 +24,12 @@ export default function Upload() {
   const handleUpload = async () => {
     if (!file) {
       setError("Please select a PDF file");
+      return;
+    }
+
+    // Check file size (1MB limit)
+    if (file.size > 1024 * 1024) {
+      setError("File size must be less than 1MB");
       return;
     }
 
@@ -68,7 +74,7 @@ export default function Upload() {
       <div className='space-y-6'>
         <div>
           <label className='block text-sm font-medium mb-2'>
-            Select PDF File:
+            Select PDF File (Max 1MB):
           </label>
           <input
             type='file'
@@ -77,8 +83,13 @@ export default function Upload() {
             className='w-full px-3 py-2 border border-gray-300 rounded-md'
           />
           {file && (
-            <p className='text-sm text-gray-600 mt-1'>
+            <p
+              className={`text-sm mt-1 ${
+                file.size > 1024 * 1024 ? "text-red-600" : "text-gray-600"
+              }`}
+            >
               Selected: {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+              {file.size > 1024 * 1024 && " - File too large!"}
             </p>
           )}
         </div>
@@ -92,11 +103,8 @@ export default function Upload() {
             onChange={e => setNumQuestions(parseInt(e.target.value))}
             className='w-full px-3 py-2 border border-gray-300 rounded-md'
           >
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
-              <option key={num} value={num}>
-                {num}
-              </option>
-            ))}
+            <option value={1}>1</option>
+            <option value={2}>2</option>
           </select>
         </div>
 
@@ -106,9 +114,9 @@ export default function Upload() {
             value={language}
             onChange={e => setLanguage(e.target.value)}
             className='w-full px-3 py-2 border border-gray-300 rounded-md'
+            disabled
           >
             <option value='english'>English</option>
-            <option value='spanish'>Spanish</option>
           </select>
         </div>
 

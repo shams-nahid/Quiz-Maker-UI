@@ -81,6 +81,16 @@ export default function Home() {
         <Button onClick={handleLogin} disabled={loading} className='w-full'>
           {loading ? "Logging in..." : "Login"}
         </Button>
+
+        <div className='text-center mt-4'>
+          <span className='text-sm text-gray-600'>Don't have an account? </span>
+          <button
+            onClick={() => router.push("/signup")}
+            className='text-sm text-blue-600 hover:text-blue-800 underline'
+          >
+            Sign up here
+          </button>
+        </div>
       </div>
     </div>
   );
